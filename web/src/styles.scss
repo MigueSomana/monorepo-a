@@ -1,0 +1,67 @@
+$modal-xl:850px;
+
+.modal-content {
+  background-color: #101820; /* Fondo oscuro */
+  .btn-close {
+    background-color: firebrick;
+  }
+}
+.card {
+  .btn-close {
+    background-color: white !important;
+  }
+}
+a,
+.white,
+.white:hover,
+.white:active {
+  color: #fff !important;
+}
+.div-cent {
+  display: flex;
+  align-items: center;
+  .btn {
+    margin: 0 auto;
+  }
+}
+.bi-trash-fill {
+  color: #C82333 !important;
+}
+.bi-building-fill-add,.bi-person-fill-add {
+  color: #218838 !important;
+}
+.bi-pencil-fill {
+  color: #E0A800 !important;
+}
+.bi-info-circle-fill{
+  color:#17A2B8 !important;
+}
+
+.icon-data {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
+  i {
+    font-size: 4rem; 
+    margin:-20px 0 0 0;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin:-20px 0 0 0;
+  }
+}
+
+.space-later{
+    padding-left: 15%;
+}
+
+.modal.fade .modal-centered {
+  display: flex;
+  align-items: center;
+  height: 100vh; 
+}
+
+.modal.fade .modal-dialog {
+  margin: auto; 
+}

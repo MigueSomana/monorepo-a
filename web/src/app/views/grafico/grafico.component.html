@@ -1,0 +1,61 @@
+<div class="graph-container" *ngIf="nodes.length > 0">
+  <ngx-graph
+    [nodes]="nodes"
+    [links]="edges"
+    [layout]="layout"
+    [curve]="curve"
+    [layoutSettings]="layoutSettings"
+    [enableZoom]="true"
+    [autoZoom]="true"
+    [autoCenter]="true"
+    [animate]="true"
+  >
+    <ng-template #defsTemplate>
+      <svg:marker
+        id="arrow"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+      </svg:marker>
+    </ng-template>
+
+    <ng-template #nodeTemplate let-node>
+      <svg:g class="node">
+        <svg:rect
+          [attr.width]="200"
+          [attr.height]="30"
+          [attr.fill]="'#ff5722'"
+          [attr.rx]="5"
+          [attr.ry]="5"
+          [attr.stroke]="'#fff'"
+          [attr.stroke-width]="1"
+        />
+        <svg:text
+          x="100"
+          y="15"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          fill="#fff"
+        >
+          {{ node.data.name }}
+        </svg:text>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge">
+        <svg:path
+          class="line"
+          stroke-width="2"
+          stroke="#ff5722"
+          fill="none"
+        ></svg:path>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
+</div>

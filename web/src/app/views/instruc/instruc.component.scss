@@ -1,0 +1,36 @@
+.menu-item {
+  cursor: pointer;
+
+  .circle {
+    width: 20%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff5722;
+
+    i,
+    h2 {
+      color: white;
+    }
+  }
+
+  .icon-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    i {
+      font-size: 2rem !important;
+      margin: -20px 0 0 0;
+    }
+    h2 {
+      font-size: 0.75rem !important;
+      margin: -10px 0 0 0;
+    }
+  }
+}
+a {
+  color: #ff5722 !important;
+}

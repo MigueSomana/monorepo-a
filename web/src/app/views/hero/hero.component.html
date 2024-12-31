@@ -1,0 +1,77 @@
+<div class="sae-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo text-center">
+      <h1 class="display-1"><strong>SAE</strong></h1>
+      <p>Sistema Administrativo Empresarial</p>
+    </div>
+    <div class="menu-items">
+      <div
+        class="menu-item"
+        (click)="toggleSection('empleados')"
+        [class.active]="activeSection === 'empleados'"
+      >
+        <div class="circle icon-data text-center">
+          <i class="bi bi-person-fill mb-2"></i>
+          <h2>Empleados</h2>
+        </div>
+      </div>
+      <div
+        class="menu-item"
+        (click)="toggleSection('departamentos')"
+        [class.active]="activeSection === 'departamentos'"
+      >
+        <div class="circle icon-data text-center">
+          <i class="bi bi-building-fill mb-2"></i>
+          <h2 class="">Departamentos</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secciones -->
+  <div class="main-content">
+    <div class="vh-100 content-section" *ngIf="activeSection === 'empleados'">
+      <app-employee-tab></app-employee-tab>
+    </div>
+
+    <div
+      class="vh-100 content-section"
+      *ngIf="activeSection === 'departamentos'"
+    >
+      <app-department-tab></app-department-tab>
+    </div>
+    <div class="vh-100 content-section" *ngIf="!activeSection">
+      <div
+        class="h-100 d-flex align-items-center justify-content-center"
+        [ngClass]="{ 'd-none': activeSection !== null }"
+      >
+        <div class="content-container">
+          <h3>Por favor, seleccione una sección</h3>
+          <h3>o</h3>
+          <button
+            type="button"
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#instruc"
+          >
+            Ver Instrucciones
+          </button>
+          <div
+            class="modal fade"
+            id="instruc"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <app-instruc></app-instruc>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

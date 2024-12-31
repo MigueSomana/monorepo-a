@@ -1,0 +1,13 @@
+.graph-container {
+    width: auto;
+    height: 400px; // Aumentado para mejor visualización
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #212529;
+  }
+  .line {
+    stroke: #fff;
+    stroke-width: 5px;
+    transform: translate(50px, 0px); /* Desplaza ligeramente la línea */
+  }

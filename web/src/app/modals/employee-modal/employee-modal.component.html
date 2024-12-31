@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <!--- Muchas cosas depende del modo, ya que se reutiliza el form para editar y para actualizar --->
+    <h5 class="modal-title">{{ isEditMode ? 'Editar Empleado' : 'Añadir Nuevo Empleado' }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="row mt-3">
+        <div class="form-group col-6">
+          <label for="name">Nombre Completo</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+          />
+          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+            <div *ngIf="f['name'].errors['required']">
+              Este campo es obligatorio
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+          />
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">
+              Este campo es obligatorio
+            </div>
+            <div *ngIf="f['email'].errors['email']">
+              Email inválido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="div-cent mt-3">
+        <button type="submit" class="btn btn-success">
+          {{ isEditMode ? 'Actualizar Empleado' : 'Crear Empleado' }}
+        </button>
+      </div>
+      <div *ngIf="alertMessage" [ngClass]="alertClass" class="alert mt-3" role="alert">
+        <i [class]="alertIcon" class="me-2"></i>
+        <div>{{ alertMessage }}</div>
+      </div>
+    </form>
+  </div>

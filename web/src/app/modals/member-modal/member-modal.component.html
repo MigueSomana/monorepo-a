@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h5 class="modal-title">Añadir Miembro al Departamento</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+      <div class="row mt-3">
+        <div class="form-group col-12 mb-3">
+          <label for="employeeId">Empleado</label>
+          <select
+            id="employeeId"
+            formControlName="employeeId"
+            class="form-select"
+            [ngClass]="{ 'is-invalid': submitted && f['employeeId'].errors }"
+          >
+            <option value="">Seleccionar empleado para añadir al departamento</option>
+            <option *ngFor="let employee of availableEmployees" [value]="employee._id">
+              {{employee.name}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f['employeeId'].errors" class="invalid-feedback">
+            <div *ngIf="f['employeeId'].errors['required']">Debe seleccionar un empleado</div>
+          </div>
+        </div>
+  
+        <div class="form-group col-12">
+          <label for="superiorId">Seleccionar superior de los empleados actuales (Opcional)</label>
+          <select
+            id="superiorId"
+            formControlName="superiorId"
+            class="form-select"
+          >
+            <option value="">Sin superior</option>
+            <option *ngFor="let member of departmentMembers" [value]="member._id">
+              {{member.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="div-cent mt-3">
+        <button type="submit" class="btn btn-success">
+          Añadir Miembro
+        </button>
+      </div>
+      <div *ngIf="alertMessage" [ngClass]="alertClass" class="alert mt-3" role="alert">
+        <i [class]="alertIcon" class="me-2"></i>
+        <div>{{ alertMessage }}</div>
+      </div>
+    </form>
+  </div>

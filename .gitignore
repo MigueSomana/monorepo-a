@@ -1,0 +1,6 @@
+/web/.vscode/
+/web/.angular/
+/web/node_modules/
+/api/node_modules/
+/api/.env
+/node_modules/
