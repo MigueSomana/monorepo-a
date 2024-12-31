@@ -13,7 +13,7 @@ declare var bootstrap: any;
   styleUrl: './department-modal.component.scss',
 })
 export class DepartmentModalComponent implements OnInit, OnChanges {
-  //Inputs del modo y el departamento seleccionado y el output para actualizar el departamento
+  //Inpust y Outputs
   @Input() isEditMode = false;
   @Input() selectedDepartment: Department | null = null;
   @Output() departmentUpdated = new EventEmitter<void>();
@@ -25,7 +25,7 @@ export class DepartmentModalComponent implements OnInit, OnChanges {
   alertClass = '';
   alertIcon = '';
 
-  //Constructor del form y el servicio
+  //Constructor de formulario y servicio
   constructor(
     private formBuilder: FormBuilder,
     private departmentService: GetApiService
@@ -36,24 +36,25 @@ export class DepartmentModalComponent implements OnInit, OnChanges {
     });
   }
 
-  //Inicializar el formulario
+  //Al iniciar resetear formulario
   ngOnInit() {
+    this.resetForm();
     if (this.selectedDepartment) {
       this.loadDepartmentData();
     }
   }
 
-  //Actualizar la data con cada cambio
+  //Actualizar cambios constantemente
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['selectedDepartment'] &&
-      changes['selectedDepartment'].currentValue
-    ) {
-      this.loadDepartmentData(); 
+    if (changes['selectedDepartment']) {
+      this.resetForm();
+      if (changes['selectedDepartment'].currentValue) {
+        this.loadDepartmentData();
+      }
     }
   }
 
-  //Cargar los datos del departamento
+  //Cargar los datos de los departamentos
   private loadDepartmentData() {
     if (this.selectedDepartment) {
       this.departmentForm.patchValue({
@@ -68,21 +69,21 @@ export class DepartmentModalComponent implements OnInit, OnChanges {
     return this.departmentForm.controls;
   }
 
-  //Resetear el formulario
+  //Resetear formulario
   resetForm() {
-    this.isEditMode = false;
-    this.selectedDepartment = null;
     this.departmentForm.reset();
     this.submitted = false;
     this.alertMessage = '';
   }
 
-  //Cerrar el modal
+  //Cerrar modal
   private closeModal() {
     const modalElement = document.getElementById('departmentCreate');
     if (modalElement) {
       const modal = bootstrap.Modal.getInstance(modalElement);
-      modal?.hide();
+      if (modal) {
+        modal.hide();
+      }
     }
   }
 

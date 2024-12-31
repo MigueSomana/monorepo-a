@@ -23,42 +23,60 @@ export class EmployeeTabComponent implements OnInit {
   //Al iniciar cargar empleados
   ngOnInit() {
     this.loadEmployees();
+    this.setupModalListeners();
   }
 
-  //Actualizar empleados
+  //Resetear variables del componente
+  private setupModalListeners() {
+    const modalElement = document.getElementById('empleadoCreate');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        this.resetModalState();
+      });
+    }
+  }
+
+  //Resetear las variables
+  private resetModalState() {
+    this.isEditMode = false;
+    this.selectedEmployee = null;
+  }
+
+  //Actualizar empleados y modal
   onEmployeeUpdated() {
     this.loadEmployees();
+    this.resetModalState();
   }
 
-  //Cargar empleados
+  //Cargar a los empleados desde el servicio
   loadEmployees() {
     this.employeeService.getEmployees().subscribe((result: any) => {
       this.employees = result.data;
     });
   }
 
-  //Abrir modal para crear empleado
+  //Abrir modal de crear
   openCreateModal() {
-    this.isEditMode = false;
-    this.selectedEmployee = null;
+    this.resetModalState();
   }
 
-  //Abrir modal para editar empleado
+  //Abrir modal de editar
   openEditModal(employee: Employee) {
-    console.log(employee);
-    this.isEditMode = true;
-    this.selectedEmployee = employee;
+    this.resetModalState(); // Limpiamos el estado anterior primero
+    setTimeout(() => {
+      this.isEditMode = true;
+      this.selectedEmployee = employee;
+    }, 0);
   }
 
   //Formatear fecha
   formatDate(a: any): string {
-    const dateString = String(a); 
-    return dateString.split('T')[0]; 
+    const dateString = String(a);
+    return dateString.split('T')[0];
   }
 
-  //Seleccionar empleado para vista
-  openView(employee: Employee){
-    this.employeeView=employee;
+  //Abrir vista
+  openView(employee: Employee) {
+    this.employeeView = employee;
   }
-  
 }

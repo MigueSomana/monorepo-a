@@ -27,11 +27,29 @@ export class DepartmentTabComponent implements OnInit {
   //Al iniciar cargar departamentos
   ngOnInit() {
     this.loadDepartments();
+    this.setupModalListeners();
   }
 
-  //Actualizar departamentos
+  //Configuraci[on del modal]
+  private setupModalListeners() {
+    const modalElement = document.getElementById('departmentCreate');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        this.resetModalState();
+      });
+    }
+  }
+
+  //Resetear valores del modal
+  private resetModalState() {
+    this.isEditMode = false;
+    this.selectedDepartment = null;
+  }
+
+  //Al actualizar departamento
   onDepartmentUpdated() {
     this.loadDepartments();
+    this.resetModalState();
   }
 
   //Cargar departamentos
@@ -41,17 +59,18 @@ export class DepartmentTabComponent implements OnInit {
     });
   }
 
-  //Abrir modal para crear departamento
+  //Abrir modal en modo crear
   openCreateModal() {
-    this.isEditMode = false;
-    this.selectedDepartment = null;
+    this.resetModalState();
   }
 
-  //Abrir modal para editar departamento
+  //Abrir modal en modo editar
   openEditModal(department: Department) {
-    console.log(department);
-    this.isEditMode = true;
-    this.selectedDepartment = department;
+    this.resetModalState(); // Limpiamos el estado anterior primero
+    setTimeout(() => {
+      this.isEditMode = true;
+      this.selectedDepartment = department;
+    }, 0);
   }
 
   //Eliminar departamento
@@ -60,13 +79,14 @@ export class DepartmentTabComponent implements OnInit {
       .deleteDepartment(this.selectedDepartment?._id || '')
       .subscribe((result: any) => {
         this.loadDepartments();
+        this.resetModalState();
       });
-      setTimeout(() => {
-        this.closeModal();
-      }, 1000);
+    setTimeout(() => {
+      this.closeModal();
+    }, 1000);
   }
 
-  //Seleccionar departamento para su CRUD
+  //Marcar departamento como seleccionado
   selectDepartment(department: Department) {
     this.selectedDepartment = department;
   }
@@ -76,8 +96,9 @@ export class DepartmentTabComponent implements OnInit {
     const modalElement = document.getElementById('deleteDepartment');
     if (modalElement) {
       const modal = bootstrap.Modal.getInstance(modalElement);
-      modal?.hide();
+      if (modal) {
+        modal.hide();
+      }
     }
   }
-
 }

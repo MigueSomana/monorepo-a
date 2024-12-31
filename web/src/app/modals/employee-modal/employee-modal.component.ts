@@ -13,7 +13,7 @@ declare var bootstrap: any;
   styleUrl: './employee-modal.component.scss'
 })
 export class EmployeeModalComponent implements OnInit, OnChanges {
-  //Inputs del modo y el empleado seleccionado y el output para actualizar el empleado
+  //Inputs y Outputs
   @Input() isEditMode = false;
   @Input() selectedEmployee: Employee | null = null;
   @Output() employeeUpdated = new EventEmitter<void>();
@@ -25,8 +25,8 @@ export class EmployeeModalComponent implements OnInit, OnChanges {
   alertClass = '';
   alertIcon = '';
 
-  //Constructor del form y el servicio
-  constructor(  
+  //Contructor de formulario y de servicio 
+  constructor(
     private formBuilder: FormBuilder,
     private employeeService: GetApiService
   ) {
@@ -36,24 +36,27 @@ export class EmployeeModalComponent implements OnInit, OnChanges {
     });
   }
 
-  //Inicializar el formulario
+  //Al iniciar resetear el form
   ngOnInit() {
+    this.resetForm();
     if (this.selectedEmployee) {
       this.loadEmployeeData();
     }
   }
 
-  //Actualizar la data con cada cambio
+  //Actualizar constantemente
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedEmployee'] && changes['selectedEmployee'].currentValue) {
-      this.loadEmployeeData();
+    if (changes['selectedEmployee']) {
+      this.resetForm();
+      if (changes['selectedEmployee'].currentValue) {
+        this.loadEmployeeData();
+      }
     }
   }
 
-  //Cargar los datos del empleado
+  //Cargar los datos de empleados
   private loadEmployeeData() {
     if (this.selectedEmployee) {
-      console.log('Cargando datos del empleado:', this.selectedEmployee);
       this.employeeForm.patchValue({
         name: this.selectedEmployee.name,
         email: this.selectedEmployee.email
@@ -66,10 +69,8 @@ export class EmployeeModalComponent implements OnInit, OnChanges {
     return this.employeeForm.controls;
   }
 
-  //Resetear el formulario
+  //Resetear formulario
   resetForm() {
-    this.isEditMode = false;
-    this.selectedEmployee = null;
     this.employeeForm.reset();
     this.submitted = false;
     this.alertMessage = '';
@@ -80,7 +81,9 @@ export class EmployeeModalComponent implements OnInit, OnChanges {
     const modalElement = document.getElementById('empleadoCreate');
     if (modalElement) {
       const modal = bootstrap.Modal.getInstance(modalElement);
-      modal?.hide();
+      if (modal) {
+        modal.hide();
+      }
     }
   }
 
